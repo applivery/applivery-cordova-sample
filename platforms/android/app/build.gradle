@@ -162,14 +162,20 @@ task cdvPrintProps {
     }
 }
 
+def STRING = "String"
+
 android {
     defaultConfig {
         versionCode cdvVersionCode ?: new BigInteger("" + privateHelpers.extractIntFromManifest("versionCode"))
         applicationId privateHelpers.extractStringFromManifest("package")
+      minSdkVersion 19
+      targetSdkVersion 28
 
-        if (cdvMinSdkVersion != null) {
+      if (cdvMinSdkVersion != null) {
             minSdkVersion cdvMinSdkVersion
         }
+
+      buildConfigField STRING, "APPLIVERY_APP_TOKEN", "\"BU-2hpX2-oP-Hs2nT3y4sPt9\""
     }
 
     lintOptions {
@@ -267,6 +273,8 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
     // SUB-PROJECT DEPENDENCIES END
+
+    implementation 'com.applivery:applvsdklib:3.0.1'
 }
 
 def promptForReleaseKeyPassword() {
